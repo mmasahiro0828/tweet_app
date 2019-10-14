@@ -1,0 +1,14 @@
+h1 ユーザー一覧
+
+- @users.each do |user|
+    =link_to (user_path(user)) do
+        div.tweets-wrapper
+            div.tweet-box.box-hover
+                div.user-box
+                    img 
+                    p.user-name1 名前
+                div.description-box
+                    div.description1 
+                    div.details
+                        div.created-time 
+                        div.like-mark ◯

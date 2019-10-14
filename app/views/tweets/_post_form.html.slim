@@ -1,0 +1,10 @@
+- if tweet.errors.present?
+    ul#error_explanation
+        - tweet.errors.full_messages.each do |message|
+            li =message
+
+= form_with model: tweet, local: true do |form|
+    .form-group
+        = form.label :description, "内容"
+        = form.text_area :description, class: "form-control", rows: 6
+    = form.submit btn_name, class: "btn btn-primary"

@@ -1,0 +1,15 @@
+h1.pt-1.pb-1 投稿一覧
+
+- @tweets.each do |tweet|
+    =link_to (tweet_path(tweet)) do
+        div.tweets-wrapper
+            div.tweet-box.box-hover
+                div.user-box
+                    img 
+                    p.user-name1 名前
+                div.description-box
+                    div.description1 =tweet.description
+                    div.details
+                        div.created-time =tweet.created_at
+                        div.like-mark ◯
+
