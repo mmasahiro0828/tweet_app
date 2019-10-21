@@ -1,15 +1,22 @@
 h1.pt-1.pb-1 投稿一覧
 
 - @tweets.each do |tweet|
-    =link_to (tweet_path(tweet)) do
+    =link_to tweet_path(tweet) do
         div.tweets-wrapper
             div.tweet-box.box-hover
                 div.user-box
-                    img 
-                    p.user-name1 名前
+                    img src="/user_images/#{User.find_by(id: tweet.user_id).image_name}"
+                    p.user-name1 =User.find_by(id: tweet.user_id).name
                 div.description-box
                     div.description1 =tweet.description
                     div.details
                         div.created-time =tweet.created_at
-                        div.like-mark ◯
-
+                        div.like-mark
+                            - if Like.exists?(tweet_id: tweet.id, user_id: current_user.id)
+                                = link_to "/like/#{tweet.id}/delete", method: :post do
+                                    span.fas.fa-heart.like-mark-colored.pr-1
+                            - else
+                                = link_to "/like/#{tweet.id}/create", method: :post do
+                                    span.fas.fa-heart.like-mark-sober.pr-1
+                            span.like-counter = Like.where(tweet_id: tweet.id).count
+                        

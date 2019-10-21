@@ -3,13 +3,21 @@ h1.pt-1.pb-1 投稿詳細
 div.tweets-wrapper
     div.tweet-box
         div.user-box
-            img 
-            p.user-name1 名前
+            img src="/user_images/#{@user.image_name}"
+            p.user-name1 = link_to @user.name, user_path(@user)
         div.description-box
             div.description1 =@tweet.description
             div.details
                 div.created-time =@tweet.created_at
-                div.like-mark ◯
-
-= link_to "編集", edit_tweet_path(@tweet), class: "btn btn-primary mt-2"
-= link_to "削除", @tweet, method: :delete, data: { confirm: "投稿を削除します。よろしいですか？"}, class: "btn btn-danger mt-2 ml-3"
+                div.like-mark
+                    - if Like.exists?(tweet_id: @tweet.id, user_id: current_user.id)
+                        = link_to "/like/#{@tweet.id}/delete", method: :post do
+                            span.fas.fa-heart.like-mark-colored.pr-1
+                    - else
+                        = link_to "/like/#{@tweet.id}/create", method: :post do
+                            span.fas.fa-heart.like-mark-sober.pr-1
+                    span.like-counter = Like.where(tweet_id: @tweet.id).count
+                    
+- if current_user != nil && current_user.id == @tweet.user_id
+    = link_to "編集", edit_tweet_path(@tweet), class: "btn btn-primary mt-2"
+    = link_to "削除", @tweet, method: :delete, data: { confirm: "投稿を削除します。よろしいですか？"}, class: "btn btn-danger mt-2 ml-3"
