@@ -1,10 +1,13 @@
 class TweetsController < ApplicationController
+  before_action :login_required, except: [:index, :show]
+  
   def index
     @tweets = Tweet.all
   end
 
   def show
     @tweet = Tweet.find(params[:id])
+    @user = User.find_by(id: @tweet.user_id)
   end
 
   def new
@@ -16,7 +19,7 @@ class TweetsController < ApplicationController
   end
   
   def create
-    @tweet = Tweet.new(tweet_params)
+    @tweet = current_user.tweets.new(tweet_params)
     
     if @tweet.save
       redirect_to tweets_url, notice: "投稿を作成しました。"

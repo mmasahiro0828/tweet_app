@@ -1,2 +1,40 @@
-h1 Users#show
-p Find me in app/views/users/show.html.slim
+h1.pt-1.pb-1 ユーザー詳細
+
+img.user-show-img src="/user_images/#{@user.image_name}"
+
+table.table.table-striped
+    tbody
+        tr
+            th ID
+            td= @user.id
+        tr
+            th name
+            td= @user.name
+        tr
+            th メールアドレス
+            td= @user.email
+        tr
+            th created
+            td= @user.created_at
+        tr
+            th updated
+            td= @user.updated_at
+
+- if current_user != nil && current_user.id == @user.id
+    = link_to "編集", edit_user_path(@user), class: "btn btn-primary mt-2"
+    = link_to "削除", @user, method: :delete, data: { confirm: "ユーザー情報を削除します。よろしいですか？"}, class: "btn btn-danger mt-2 ml-3"
+
+
+.for-space2
+- @tweets.each do |tweet|
+    =link_to (tweet_path(tweet)) do
+        div.tweets-wrapper
+            div.tweet-box.box-hover
+                
+                div.description-box
+                    div.description1 =tweet.description
+                    div.details
+                        div.created-time =tweet.created_at
+                        div.like-mark
+                            span.fas.fa-heart.like-mark-sober-not-hover.pr-1
+                            span.like-counter = Like.where(tweet_id: tweet.id).count

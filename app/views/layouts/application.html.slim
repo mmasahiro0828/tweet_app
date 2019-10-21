@@ -7,6 +7,7 @@ html
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet"
   body
   
   .navbar.navbar-expand-md.navbar-dark.bg-dark.sticky-top
@@ -15,13 +16,16 @@ html
       span.navbar-toggler-icon
     .collapse.navbar-collapse.justify-content-end.
       ul.navbar-nav
-        li.nav-item.mr-4 =link_to "新規投稿", new_tweet_path
-        li.nav-item.mr-4 =link_to "#", new_user_path
-        li.nav-item.mr-4 =link_to "投稿一覧", tweets_path
-        li.nav-item.mr-4 =link_to "ユーザー一覧", "#"
-        li.nav-item.mr-4 =link_to "you", "#"
-        li.nav-item.mr-4 =link_to "ログアウト", "#"
-
+        li.nav-item.mr-4 =link_to "新規投稿", new_tweet_path, class: "btn btn-primary"
+        li.nav-item.mr-4 =link_to "投稿一覧", tweets_path, class: "nav-link"
+        li.nav-item.mr-4 =link_to "ユーザー一覧", users_path, class: "nav-link"
+        - if current_user
+          li.nav-item.mr-4 =link_to current_user.name, user_path(current_user), class: "nav-link"
+          li.nav-item.mr-4 =link_to "ログアウト", logout_path, method: :delete, data: { confirm: "ログアウトします。よろしいですか？"}, class: "nav-link"
+        - if current_user == nil
+          li.nav-item.mr-4 =link_to "ログイン", login_path, class: "nav-link"
+        
+        
   .container.pt-2
     - if flash.notice.present?
       .alert.alert-success =flash.notice
