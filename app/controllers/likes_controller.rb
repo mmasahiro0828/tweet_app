@@ -1,13 +1,13 @@
 class LikesController < ApplicationController
     def create
+        @tweet = Tweet.find_by(id: params[:id])
         @like = current_user.likes.new(tweet_id: params[:id])
         @like.save
-        redirect_to tweets_url
     end
     
     def destroy
-        @like = current_user.likes.find_by(tweet_id: params[:id])
+        @tweet = Tweet.find_by(id: params[:id])
+        @like = Like.find_by(tweet_id: params[:id], user_id: current_user.id)
         @like.destroy
-        redirect_to tweets_url
     end
 end

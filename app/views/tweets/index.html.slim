@@ -11,12 +11,6 @@ h1.pt-1.pb-1 投稿一覧
                     div.description1 =tweet.description
                     div.details
                         div.created-time =tweet.created_at
-                        div.like-mark
-                            - if Like.exists?(tweet_id: tweet.id, user_id: current_user.id)
-                                = link_to "/like/#{tweet.id}/delete", method: :post do
-                                    span.fas.fa-heart.like-mark-colored.pr-1
-                            - else
-                                = link_to "/like/#{tweet.id}/create", method: :post do
-                                    span.fas.fa-heart.like-mark-sober.pr-1
-                            span.like-counter = Like.where(tweet_id: tweet.id).count
+                        div.like-mark id="like-btn-#{tweet.id}"
+                            = render partial: 'likes/like_button', locals: { tweet: tweet}
                         
