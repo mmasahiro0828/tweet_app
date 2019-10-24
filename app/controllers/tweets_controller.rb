@@ -2,7 +2,7 @@ class TweetsController < ApplicationController
   before_action :login_required, except: [:index, :show]
   
   def index
-    @tweets = Tweet.all
+    @tweets = Tweet.all.recent
   end
 
   def show
