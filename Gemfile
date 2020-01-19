@@ -65,3 +65,5 @@ gem "slim-rails"
 gem "html2slim"
 gem "bootstrap"
 gem 'jquery-rails'
+gem "rspec-rails"
+gem "factory_bot_rails"
